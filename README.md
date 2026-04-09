@@ -1,4 +1,4 @@
-# rzyczalt
+# ryczalt
 
 Personal research project for simplifying Polish ryczałt (flat-rate) tax calculations.
 
