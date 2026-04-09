@@ -7,10 +7,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useMemo, useState } from "react";
 import Decimal from "decimal.js";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { formatCurrency, formatPercent } from "../lib/formatters";
 import FormulaBlock from "./FormulaBlock";
 import FormulaBadge from "./FormulaBadge";
@@ -127,9 +126,9 @@ const NetIncomePanel = ({
               >
                 <Typography color="text.secondary">Tax due</Typography>
                 {taxOpen ? (
-                  <ExpandLessIcon fontSize="small" />
+                  <ExpandLess fontSize="small" />
                 ) : (
-                  <ExpandMoreIcon fontSize="small" />
+                  <ExpandMore fontSize="small" />
                 )}
               </ButtonBase>
               <Typography>{formatCurrency(taxDue)}</Typography>
@@ -188,9 +187,9 @@ const NetIncomePanel = ({
               >
                 <Typography color="text.secondary">ZUS total</Typography>
                 {zusOpen ? (
-                  <ExpandLessIcon fontSize="small" />
+                  <ExpandLess fontSize="small" />
                 ) : (
-                  <ExpandMoreIcon fontSize="small" />
+                  <ExpandMore fontSize="small" />
                 )}
               </ButtonBase>
               <Typography>{formatCurrency(zusTotal)}</Typography>

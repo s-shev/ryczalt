@@ -1,8 +1,7 @@
-import { IconButton, Stack, Typography } from "@mui/material";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { InfoOutlined } from "@mui/icons-material";
+import { IconButton, Tooltip, tooltipClasses } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import type { TooltipProps } from "@mui/material/Tooltip";
+import type { TooltipProps } from "@mui/material";
 import type { ReactNode } from "react";
 
 type InfoTooltipProps = {
@@ -35,7 +34,7 @@ const InfoTooltip = ({
   return (
     <StyledTooltip title={title} placement={placement} arrow>
       <IconButton size="small" aria-label={ariaLabel}>
-        <InfoOutlinedIcon fontSize="small" />
+        <InfoOutlined fontSize="small" />
       </IconButton>
     </StyledTooltip>
   );

@@ -6,10 +6,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useState } from "react";
 import Decimal from "decimal.js";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { CalcOutput, ZusStage } from "../lib/calc";
 import { formatCurrency, formatPercent } from "../lib/formatters";
 import { RYCZALT_2026 } from "../data/ryczalt2026";
@@ -104,9 +103,9 @@ const BreakdownRow = ({ label, value, children }: BreakdownRowProps) => {
         >
           <Typography color="text.secondary">{label}</Typography>
           {open ? (
-            <ExpandLessIcon fontSize="small" />
+            <ExpandLess fontSize="small" />
           ) : (
-            <ExpandMoreIcon fontSize="small" />
+            <ExpandMore fontSize="small" />
           )}
         </ButtonBase>
         <Typography>{formatCurrency(value)}</Typography>
