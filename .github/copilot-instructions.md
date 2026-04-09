@@ -1,4 +1,4 @@
-# Copilot Instructions for rzyczalt-2026
+# Copilot Instructions for ryczalt-2026
 
 ## Project Overview
 
