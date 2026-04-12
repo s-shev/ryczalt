@@ -8,19 +8,21 @@ import {
   Typography,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Decimal from "decimal.js";
 import { formatCurrency, formatPercent } from "../lib/formatters";
 import FormulaBlock from "./FormulaBlock";
-import FormulaBadge from "./FormulaBadge";
 
 type NetIncomePanelProps = {
   grossIncome: number;
   netIncome: Decimal;
   taxDue: Decimal;
+  taxDueRaw: Decimal;
   zusTotal: Decimal;
   healthContribution: Decimal;
   socialInsurance: Decimal;
+  taxableBaseRaw: Decimal;
+  taxableBaseRounded: Decimal;
   ryczaltRate: number;
 };
 
@@ -82,18 +84,17 @@ const NetIncomePanel = ({
   grossIncome,
   netIncome,
   taxDue,
+  taxDueRaw,
   zusTotal,
   healthContribution,
   socialInsurance,
+  taxableBaseRaw,
+  taxableBaseRounded,
   ryczaltRate,
 }: NetIncomePanelProps) => {
   const [taxOpen, setTaxOpen] = useState(false);
   const [zusOpen, setZusOpen] = useState(false);
-  const grossDecimal = useMemo(() => new Decimal(grossIncome), [grossIncome]);
-  const taxableBase = useMemo(
-    () => grossDecimal.sub(healthContribution.mul(0.5)).sub(socialInsurance),
-    [grossDecimal, healthContribution, socialInsurance],
-  );
+  const grossDecimal = new Decimal(grossIncome);
 
   return (
     <Paper
@@ -137,7 +138,7 @@ const NetIncomePanel = ({
               <FormulaBlock>
                 <Stack spacing={0.4}>
                   <FormulaLine>
-                    Taxable base =
+                    Taxable base (raw) =
                     <FormulaParam
                       label="Gross income"
                       value={formatCurrency(grossDecimal)}
@@ -152,19 +153,36 @@ const NetIncomePanel = ({
                       label="Social insurance"
                       value={formatCurrency(socialInsurance)}
                     />
-                    = {formatCurrency(taxableBase)}
+                    = {formatCurrency(taxableBaseRaw)}
                   </FormulaLine>
                   <FormulaLine>
-                    Tax due =
+                    Taxable base (rounded, Art. 63 § 1) =
                     <FormulaParam
-                      label="Taxable base"
-                      value={formatCurrency(taxableBase)}
+                      label="Taxable base (raw)"
+                      value={formatCurrency(taxableBaseRaw)}
+                    />
+                    = {formatCurrency(taxableBaseRounded)}
+                  </FormulaLine>
+                  <FormulaLine>
+                    Tax due (raw) =
+                    <FormulaParam
+                      label="Taxable base (rounded)"
+                      value={formatCurrency(taxableBaseRounded)}
                     />
                     *
                     <FormulaParam
                       label="Ryczałt rate"
                       value={formatPercent(ryczaltRate)}
                     />
+                    = {formatCurrency(taxDueRaw)}
+                  </FormulaLine>
+                  <FormulaLine>
+                    Tax due (rounded, Art. 63 § 1) =
+                    <FormulaParam
+                      label="Tax due (raw)"
+                      value={formatCurrency(taxDueRaw)}
+                    />
+                    = {formatCurrency(taxDue)}
                   </FormulaLine>
                 </Stack>
               </FormulaBlock>

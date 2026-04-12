@@ -25,12 +25,17 @@ export type CalcOutput = {
   socialInsuranceBase: Decimal;
   socialBreakdown: SocialBreakdown;
   socialInsurance: Decimal;
+  taxableBaseRaw: Decimal;
+  taxableBaseRounded: Decimal;
+  taxDueRaw: Decimal;
   taxDue: Decimal;
   zusTotal: Decimal;
   netIncome: Decimal;
 };
 
 const toDecimal = (value: number) => new Decimal(value || 0);
+const roundToFullPln = (value: Decimal) =>
+  value.toDecimalPlaces(0, Decimal.ROUND_HALF_UP);
 
 const resolveTierMultiplier = (annualRevenue: Decimal) => {
   const { tierThresholds, tierMultipliers } = RYCZALT_2026;
@@ -104,11 +109,13 @@ export const calcRyczalt = (input: CalcInput): CalcOutput => {
     new Decimal(0),
   );
 
-  const taxableBase = Decimal.max(
+  const taxableBaseRaw = Decimal.max(
     grossIncome.sub(healthContribution.mul(0.5)).sub(socialInsurance),
     0,
   );
-  const taxDue = taxableBase.mul(input.ryczaltRate);
+  const taxableBaseRounded = roundToFullPln(taxableBaseRaw);
+  const taxDueRaw = taxableBaseRounded.mul(input.ryczaltRate);
+  const taxDue = roundToFullPln(taxDueRaw);
   const zusTotal = healthContribution.add(socialInsurance);
   const netIncome = grossIncome.sub(taxDue).sub(zusTotal);
 
@@ -119,6 +126,9 @@ export const calcRyczalt = (input: CalcInput): CalcOutput => {
     socialInsuranceBase,
     socialBreakdown,
     socialInsurance,
+    taxableBaseRaw,
+    taxableBaseRounded,
+    taxDueRaw,
     taxDue,
     zusTotal,
     netIncome,

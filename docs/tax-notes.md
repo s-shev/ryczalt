@@ -18,12 +18,30 @@ Clean reference for the formulas and parameters used in the ryczałt tax calcula
 ```
 Net income = Gross income - Tax due - ZUS total
 
-Tax due = (Gross income - 0.5 * Health contribution - Social insurance) * Ryczałt rate
+Taxable base (raw) = Gross income - 0.5 * Health contribution - Social insurance
+
+Taxable base (rounded to full PLN) = round(Taxable base raw)
+
+Tax due (raw) = Taxable base (rounded) * Ryczałt rate
+
+Tax due (rounded to full PLN) = round(Tax due raw)
 
 ZUS total = Health contribution + Social insurance
 
 Social insurance = Pension + Disability + Sickness + Accident + Labor Fund
 ```
+
+## Tax rounding (Ordynacja podatkowa)
+
+Polish tax law rounds monetary tax values to full PLN using standard mathematical rounding, not always up.
+
+- Amounts ending with 0.01-0.49 PLN are rounded down.
+- Amounts ending with 0.50-0.99 PLN are rounded up.
+
+Legal basis:
+
+- Ustawa z dnia 29 sierpnia 1997 r. - Ordynacja podatkowa, Art. 63 § 1
+- ISAP: https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19971370926 (search for "Art. 63")
 
 ## ZUS stages (JDG)
 

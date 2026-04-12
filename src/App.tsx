@@ -81,10 +81,13 @@ const App = () => {
                 <NetIncomePanel
                   netIncome={result.netIncome}
                   taxDue={result.taxDue}
+                  taxDueRaw={result.taxDueRaw}
                   zusTotal={result.zusTotal}
                   grossIncome={grossValue}
                   healthContribution={result.healthContribution}
                   socialInsurance={result.socialInsurance}
+                  taxableBaseRaw={result.taxableBaseRaw}
+                  taxableBaseRounded={result.taxableBaseRounded}
                   ryczaltRate={rate}
                 />
 
